@@ -71,7 +71,8 @@ export default function TornadoFeatures() {
   >(FEATURES.map(() => ({ x: 0, z: 0, y: 0, scale: 0.7, opacity: 0.4, blur: 3, rotateY: 0 })));
   const currentThetaRef = useRef(0);
   const rafRef = useRef<number>(0);
-  const [isMobile, setIsMobile] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
@@ -80,6 +81,7 @@ export default function TornadoFeatures() {
       setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
     };
     check();
+    setMounted(true);
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
@@ -117,7 +119,7 @@ export default function TornadoFeatures() {
   }, [isTablet]);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (!mounted || isMobile) return;
 
     const section = sectionRef.current;
     if (!section) return;
@@ -153,10 +155,10 @@ export default function TornadoFeatures() {
       window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [isMobile, updateCards]);
+  }, [mounted, isMobile, updateCards]);
 
-  // Mobile carousel
-  if (isMobile) {
+  // Mobile carousel — only render after mount to avoid SSR/hydration mismatch on desktop
+  if (mounted && isMobile) {
     // Phone mockup inner screen: 188px wide × 400px tall matches the 9:19 screenshot ratio
     const PHONE_OUTER_W = 200;
     const PHONE_OUTER_H = 412; // 6px padding each side: inner = 188×400
