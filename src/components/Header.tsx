@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 const NAV_LINKS = [
   { label: 'Features', href: '#features' },
   { label: 'Community', href: '#testimonials' },
+  { label: 'Privacy Policy', href: '/privacy' },
 ];
 
 export default function Header() {
