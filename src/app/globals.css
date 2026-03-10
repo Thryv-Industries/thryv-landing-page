@@ -32,15 +32,10 @@
   --font-heading: var(--font-heading);
 }
 
-html {
-  overflow-x: hidden;
-}
-
 body {
   background: var(--bg-deep);
   color: var(--text-primary);
   font-family: var(--font-body), system-ui, sans-serif;
-  overflow-x: hidden;
 }
 
 /* Noise texture overlay */
