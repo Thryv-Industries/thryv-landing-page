@@ -226,6 +226,7 @@ export default function TornadoFeatures() {
       {/* ── Desktop / Tablet tornado — hidden on mobile ── */}
       <section
         ref={sectionRef}
+        id="features"
         className="relative hidden md:block"
         style={{ height: '500vh' }}
         aria-label="Features"
