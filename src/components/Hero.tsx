@@ -69,7 +69,7 @@ export default function Hero() {
 
           {/* Headline */}
           <h1
-            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-[0.95] tracking-tight transition-all duration-700 delay-100"
+            className="text-[2.5rem] sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-[0.95] tracking-tight transition-all duration-700 delay-100"
             style={{
               fontFamily: 'var(--font-heading)',
               opacity: loaded ? 1 : 0,
@@ -171,26 +171,24 @@ export default function Hero() {
           >
             {/* Stacked avatars */}
             <div className="flex -space-x-2">
-              {['#FF4538', '#4A9EFF', '#00D68F', '#FFB800'].map((color, i) => (
-                <div
-                  key={i}
-                  className="w-7 h-7 rounded-full border-2"
-                  style={{ background: color, borderColor: 'var(--bg-deep)' }}
-                />
+              {['/pfps/yassin.png.jpeg', '/pfps/yahia.png.jpeg', '/pfps/joe.png.jpeg'].map((src, i) => (
+                <div key={i} className="w-9 h-9 rounded-full border-2 overflow-hidden" style={{ borderColor: 'var(--bg-deep)' }}>
+                  <Image src={src} alt="Waitlist member" width={36} height={36} quality={100} sizes="36px" className="w-full h-full object-cover" />
+                </div>
               ))}
             </div>
             <span
               className="text-xs"
               style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}
             >
-              500+ already on the waitlist
+              50+ already on the waitlist!
             </span>
           </div>
         </div>
 
         {/* Right — Visual element */}
         <div
-          className="relative hidden lg:flex items-center justify-center mr-[-1rem] transition-all duration-1000 delay-300"
+          className="relative hidden lg:flex items-center justify-center mr-[-1rem] pl-16 transition-all duration-1000 delay-300"
           style={{
             opacity: loaded ? 1 : 0,
             transform: loaded ? 'translateX(0)' : 'translateX(60px)',
@@ -210,24 +208,33 @@ export default function Hero() {
 
           {/* Phone mockup */}
           <div
-            className="relative w-67.5 h-143.5 rounded-3xl overflow-hidden"
+            className="relative"
             style={{
+              width: '270px',
+              height: '574px',
               animation: 'float 5s ease-in-out infinite',
-              boxShadow: '0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(255,69,56,0.1)',
+              borderRadius: '42px',
+              background: '#111111',
+              padding: '7px',
+              boxShadow: '0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(255,69,56,0.1), inset 0 0 0 1px rgba(255,255,255,0.12)',
             }}
           >
-            <Image
-              src="/screenshots/workout-tracking.png"
-              alt="Thryv workout tracking screen"
-              fill
-              className="object-cover"
-              priority
-            />
+            {/* Screen */}
+            <div className="relative w-full h-full overflow-hidden" style={{ borderRadius: '36px' }}>
+              <Image
+                src="/screenshots/workout-tracking.png"
+                alt="Thryv workout tracking screen"
+                fill
+                className="object-cover"
+                sizes="270px"
+                priority
+              />
+            </div>
           </div>
 
           {/* Floating stat cards */}
           <div
-            className="absolute -left-8 top-16 glass-card px-4 py-3 hover:transform-none"
+            className="absolute left-4 top-16 glass-card px-4 py-3 hover:transform-none"
             style={{
               animation: 'float 4s ease-in-out infinite',
               animationDelay: '-1s',
@@ -237,7 +244,7 @@ export default function Hero() {
             <div className="text-lg font-bold" style={{ color: 'var(--accent-green)', fontFamily: 'var(--font-heading)' }}>2,340 kcal</div>
           </div>
           <div
-            className="absolute -right-4 bottom-28 glass-card px-4 py-3 hover:transform-none"
+            className="absolute -right-12 bottom-28 glass-card px-4 py-3 hover:transform-none"
             style={{
               animation: 'float 4s ease-in-out infinite',
               animationDelay: '-2.5s',

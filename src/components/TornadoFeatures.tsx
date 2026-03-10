@@ -71,7 +71,7 @@ export default function TornadoFeatures() {
   >(FEATURES.map(() => ({ x: 0, z: 0, y: 0, scale: 0.7, opacity: 0.4, blur: 3, rotateY: 0 })));
   const currentThetaRef = useRef(0);
   const rafRef = useRef<number>(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
@@ -157,37 +157,60 @@ export default function TornadoFeatures() {
 
   // Mobile carousel
   if (isMobile) {
+    // Phone mockup inner screen: 188px wide × 400px tall matches the 9:19 screenshot ratio
+    const PHONE_OUTER_W = 200;
+    const PHONE_OUTER_H = 412; // 6px padding each side: inner = 188×400
+
     return (
-      <section ref={sectionRef} className="py-20 px-4" aria-label="Features" id="features">
+      <section ref={sectionRef} className="py-20" aria-label="Features" id="features">
         <h2
-          className="text-3xl font-bold text-center mb-3"
+          className="text-3xl font-bold text-center mb-2 px-4"
           style={{ fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}
         >
           What Makes Thryv <span style={{ color: 'var(--brand-red)' }}>Different</span>
         </h2>
-        <p className="text-center text-sm mb-10" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
-          Swipe to explore features
+        <p className="text-center text-sm mb-10 px-4" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
+          Swipe to explore
         </p>
 
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4 scrollbar-hide">
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 px-8 scrollbar-hide">
           {FEATURES.map((feature, i) => (
-            <div key={i} className="snap-center shrink-0 w-72 rounded-2xl overflow-hidden" style={{ background: 'var(--bg-card)' }}>
-              <div className="h-48 relative overflow-hidden">
-                <Image
-                  src={feature.screenshot}
-                  alt={feature.title}
-                  fill
-                  className="object-cover"
-                />
+            <div key={i} className="snap-center shrink-0 flex flex-col items-center gap-4" style={{ width: PHONE_OUTER_W }}>
+              {/* Phone mockup frame */}
+              <div
+                style={{
+                  width: PHONE_OUTER_W,
+                  height: PHONE_OUTER_H,
+                  borderRadius: '36px',
+                  background: '#111111',
+                  padding: '6px',
+                  boxShadow: '0 25px 50px rgba(0,0,0,0.6), 0 0 30px rgba(255,69,56,0.1), inset 0 0 0 1px rgba(255,255,255,0.12)',
+                  flexShrink: 0,
+                }}
+              >
+                <div className="relative w-full h-full overflow-hidden" style={{ borderRadius: '31px' }}>
+                  <Image
+                    src={feature.screenshot}
+                    alt={feature.title}
+                    fill
+                    className="object-cover object-top"
+                    sizes="200px"
+                  />
+                </div>
               </div>
-              <div className="p-5">
-                <h3
-                  className="text-lg font-bold mb-2"
-                  style={{ fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}
-                >
-                  {feature.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
+
+              {/* Feature info */}
+              <div className="text-center px-1" style={{ width: PHONE_OUTER_W }}>
+                <div className="flex items-center justify-center gap-2 mb-1.5" style={{ color: 'var(--brand-red)' }}>
+                  {feature.icon}
+                  <h3
+                    className="text-sm font-bold"
+                    style={{ fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}
+                  >
+                    {feature.title}
+                  </h3>
+                </div>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
                   {feature.description}
                 </p>
               </div>
@@ -207,7 +230,7 @@ export default function TornadoFeatures() {
       aria-label="Features"
       id="features"
     >
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden pt-16">
         <div className="w-full max-w-7xl mx-auto px-8 flex items-center">
           {/* Feature description — left panel */}
           <div className="w-[35%] pr-8 relative min-h-[260px]">
@@ -286,7 +309,7 @@ export default function TornadoFeatures() {
               return (
                 <div
                   key={i}
-                  className="absolute rounded-[2.5rem] overflow-hidden shadow-2xl"
+                  className="absolute shadow-2xl"
                   style={{
                     width: CARD_W,
                     height: CARD_H,
@@ -295,17 +318,24 @@ export default function TornadoFeatures() {
                     filter: `blur(${t.blur}px)`,
                     zIndex: Math.round(t.z + DESKTOP_RADIUS),
                     transition: 'box-shadow 0.4s ease',
+                    borderRadius: '36px',
+                    background: '#111111',
+                    padding: '6px',
                     boxShadow: isFront
-                      ? '0 30px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,69,56,0.15)'
-                      : '0 10px 30px rgba(0,0,0,0.3)',
+                      ? '0 30px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,69,56,0.15), inset 0 0 0 1px rgba(255,255,255,0.12)'
+                      : '0 10px 30px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.08)',
                   }}
                 >
-                  <Image
-                    src={feature.screenshot}
-                    alt={feature.title}
-                    fill
-                    className="object-cover"
-                  />
+                  {/* Screen */}
+                  <div className="relative w-full h-full overflow-hidden" style={{ borderRadius: '31px' }}>
+                    <Image
+                      src={feature.screenshot}
+                      alt={feature.title}
+                      fill
+                      className="object-cover"
+                      sizes="250px"
+                    />
+                  </div>
                 </div>
               );
             })}

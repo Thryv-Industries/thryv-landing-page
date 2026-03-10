@@ -50,7 +50,7 @@ export default function Testimonials() {
           observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.05 }
     );
 
     observer.observe(section);
@@ -122,8 +122,57 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* Testimonial cards — asymmetric grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Testimonial cards — carousel on mobile, grid on desktop */}
+        <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4 scrollbar-hide">
+          {COMMUNITY_VOICES.map((voice, i) => (
+            <div
+              key={i}
+              className="glass-card snap-center shrink-0 p-6 flex flex-col justify-between transition-all duration-700"
+              style={{
+                width: 'calc(85vw)',
+                minHeight: '200px',
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                transitionDelay: `${300 + i * 150}ms`,
+              }}
+            >
+              <div>
+                <div className="flex gap-1 mb-4">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill="#FFB800">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" />
+                    </svg>
+                  ))}
+                </div>
+                <p
+                  className="text-base leading-relaxed mb-5"
+                  style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}
+                >
+                  &ldquo;{voice.quote}&rdquo;
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
+                  style={{ background: voice.avatar }}
+                >
+                  {voice.name[0]}
+                </div>
+                <div>
+                  <div className="text-sm font-semibold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}>
+                    {voice.name}
+                  </div>
+                  <div className="text-xs" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
+                    {voice.role}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop grid */}
+        <div className="hidden md:grid grid-cols-2 gap-5">
           {COMMUNITY_VOICES.map((voice, i) => (
             <div
               key={i}
@@ -134,7 +183,6 @@ export default function Testimonials() {
                 transitionDelay: `${300 + i * 150}ms`,
               }}
             >
-              {/* Star rating */}
               <div className="flex gap-1 mb-4">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill="#FFB800">
@@ -142,14 +190,12 @@ export default function Testimonials() {
                   </svg>
                 ))}
               </div>
-
               <p
                 className="text-base leading-relaxed mb-5"
                 style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}
               >
                 &ldquo;{voice.quote}&rdquo;
               </p>
-
               <div className="flex items-center gap-3">
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white"
@@ -158,16 +204,10 @@ export default function Testimonials() {
                   {voice.name[0]}
                 </div>
                 <div>
-                  <div
-                    className="text-sm font-semibold"
-                    style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}
-                  >
+                  <div className="text-sm font-semibold" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-body)' }}>
                     {voice.name}
                   </div>
-                  <div
-                    className="text-xs"
-                    style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}
-                  >
+                  <div className="text-xs" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
                     {voice.role}
                   </div>
                 </div>
