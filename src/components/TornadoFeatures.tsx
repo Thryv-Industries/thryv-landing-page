@@ -129,8 +129,16 @@ export default function TornadoFeatures() {
 
       const progress = Math.max(0, Math.min(1, -rect.top / sectionHeight));
       const targetTheta = progress * Math.PI * 2;
+      const diff = targetTheta - currentThetaRef.current;
 
-      currentThetaRef.current += (targetTheta - currentThetaRef.current) * 0.08;
+      if (Math.abs(diff) < 0.001) {
+        // Animation settled — stop the loop. Next scroll event will restart it via handleScroll.
+        currentThetaRef.current = targetTheta;
+        updateCards(currentThetaRef.current);
+        return;
+      }
+
+      currentThetaRef.current += diff * 0.08;
       updateCards(currentThetaRef.current);
 
       rafRef.current = requestAnimationFrame(tick);
